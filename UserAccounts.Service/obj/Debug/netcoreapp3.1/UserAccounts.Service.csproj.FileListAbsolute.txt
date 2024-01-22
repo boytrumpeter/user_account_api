@@ -1,0 +1,13 @@
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\bin\Debug\netcoreapp3.1\UserAccounts.Service.deps.json
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\bin\Debug\netcoreapp3.1\UserAccounts.Service.dll
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\bin\Debug\netcoreapp3.1\UserAccounts.Service.pdb
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\bin\Debug\netcoreapp3.1\UserAccounts.Domain.dll
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\bin\Debug\netcoreapp3.1\UserAccounts.Domain.pdb
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.csproj.AssemblyReference.cache
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.AssemblyInfoInputs.cache
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.AssemblyInfo.cs
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.csproj.CoreCompileInputs.cache
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.csproj.CopyComplete
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.dll
+C:\Users\avadh\source\repos\UserAccounts\UserAccounts.Service\obj\Debug\netcoreapp3.1\UserAccounts.Service.pdb

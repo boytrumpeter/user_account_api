@@ -1,0 +1,294 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Api\\UserAccounts.Api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Api\\UserAccounts.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Api\\UserAccounts.Api.csproj",
+        "projectName": "UserAccounts.Api",
+        "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Api\\UserAccounts.Api.csproj",
+        "packagesPath": "C:\\Users\\avadh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\avadh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\avadh\\source\\repos\\NugetExample": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Infrastructure\\UserAccounts.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Infrastructure\\UserAccounts.Infrastructure.csproj"
+              },
+              "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Service\\UserAccounts.Service.csproj": {
+                "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Service\\UserAccounts.Service.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[3.1.32, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj",
+        "projectName": "UserAccounts.Domain",
+        "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj",
+        "packagesPath": "C:\\Users\\avadh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\avadh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\avadh\\source\\repos\\NugetExample": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Infrastructure\\UserAccounts.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Infrastructure\\UserAccounts.Infrastructure.csproj",
+        "projectName": "UserAccounts.Infrastructure",
+        "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Infrastructure\\UserAccounts.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\avadh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\avadh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\avadh\\source\\repos\\NugetExample": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj": {
+                "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.32, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[3.1.32, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Service\\UserAccounts.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Service\\UserAccounts.Service.csproj",
+        "projectName": "UserAccounts.Service",
+        "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Service\\UserAccounts.Service.csproj",
+        "packagesPath": "C:\\Users\\avadh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\avadh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\avadh\\source\\repos\\NugetExample": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj": {
+                "projectPath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.1.1, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.3.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.32, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

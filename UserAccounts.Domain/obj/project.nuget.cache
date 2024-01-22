@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "nZOvFmEZ45HKICiz3guUUIRR6P5bhPL4I+IDKPf5MleQ7eayh/y4I1M03AAD6/ktTq9W8WD328CHxKH0IukG1A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\avadh\\source\\repos\\UserAccounts\\UserAccounts.Domain\\UserAccounts.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\avadh\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
