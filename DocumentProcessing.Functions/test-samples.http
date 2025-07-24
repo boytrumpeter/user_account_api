@@ -1,0 +1,82 @@
+### Variables
+@baseUrl = http://localhost:7071
+@batchId = sample-batch-123
+
+### Process Documents - Single Document
+POST {{baseUrl}}/api/ProcessDocuments
+Content-Type: application/json
+
+{
+  "batchId": "{{batchId}}",
+  "documents": [
+    {
+      "name": "invoice-001.xml",
+      "xmlContent": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><invoice><id>INV-001</id><customer>John Doe</customer><amount>150.00</amount><date>2024-01-15</date></invoice>"
+    }
+  ],
+  "callbackUrl": "https://webhook.site/your-unique-url",
+  "metadata": {
+    "userId": "user123",
+    "priority": "normal",
+    "department": "sales"
+  }
+}
+
+### Process Documents - Multiple Documents
+POST {{baseUrl}}/api/ProcessDocuments
+Content-Type: application/json
+
+{
+  "batchId": "multi-batch-456",
+  "documents": [
+    {
+      "name": "document1.xml",
+      "xmlContent": "<?xml version=\"1.0\"?><root><item id=\"1\">First Document</item></root>"
+    },
+    {
+      "name": "document2.xml",
+      "xmlContent": "<?xml version=\"1.0\"?><root><item id=\"2\">Second Document</item></root>"
+    },
+    {
+      "name": "document3.xml",
+      "xmlContent": "<?xml version=\"1.0\"?><root><item id=\"3\">Third Document</item></root>"
+    }
+  ],
+  "metadata": {
+    "source": "api-test",
+    "timestamp": "2024-01-15T10:30:00Z"
+  }
+}
+
+### Process Documents - Invalid XML (for testing validation)
+POST {{baseUrl}}/api/ProcessDocuments
+Content-Type: application/json
+
+{
+  "batchId": "error-test-789",
+  "documents": [
+    {
+      "name": "invalid-document.xml",
+      "xmlContent": "<root><unclosed-tag>This XML is malformed"
+    },
+    {
+      "name": "valid-document.xml",
+      "xmlContent": "<?xml version=\"1.0\"?><root><valid>This one is fine</valid></root>"
+    }
+  ]
+}
+
+### Get Processing Status
+GET {{baseUrl}}/api/GetProcessingStatus/{{batchId}}
+
+### Get Processing Status for Multi-Batch
+GET {{baseUrl}}/api/GetProcessingStatus/multi-batch-456
+
+### Get Processing Status for Error Test
+GET {{baseUrl}}/api/GetProcessingStatus/error-test-789
+
+### Get Document Status (individual document)
+GET {{baseUrl}}/api/GetDocumentStatus/sample-document-id
+
+### Health Check (if available)
+GET {{baseUrl}}/api/health

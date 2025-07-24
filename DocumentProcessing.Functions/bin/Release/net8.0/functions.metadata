@@ -1,0 +1,178 @@
+[
+  {
+    "name": "DocumentProcessingOrchestrator",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Orchestrators.DocumentProcessingOrchestrator.RunOrchestrator",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "context",
+        "direction": "In",
+        "type": "orchestrationTrigger",
+        "properties": {}
+      }
+    ]
+  },
+  {
+    "name": "ProcessDocuments",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Functions.DocumentProcessingFunctions.ProcessDocuments",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Function",
+        "methods": [
+          "post"
+        ],
+        "route": "documents/process",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "GetProcessingStatus",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Functions.DocumentProcessingFunctions.GetProcessingStatus",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Function",
+        "methods": [
+          "get"
+        ],
+        "route": "documents/batch/{batchId}/status",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "GetDocumentStatus",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Functions.DocumentProcessingFunctions.GetDocumentStatus",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Function",
+        "methods": [
+          "get"
+        ],
+        "route": "documents/{documentId}/status",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "ValidateXml",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Functions.DocumentProcessingFunctions.ValidateXml",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "req",
+        "direction": "In",
+        "type": "httpTrigger",
+        "authLevel": "Function",
+        "methods": [
+          "post"
+        ],
+        "route": "documents/validate",
+        "properties": {}
+      },
+      {
+        "name": "$return",
+        "type": "http",
+        "direction": "Out"
+      }
+    ]
+  },
+  {
+    "name": "ValidateDocumentActivity",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Activities.DocumentProcessingActivities.ValidateDocument",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "input",
+        "direction": "In",
+        "type": "activityTrigger",
+        "properties": {}
+      }
+    ]
+  },
+  {
+    "name": "SendToPrintingActivity",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Activities.DocumentProcessingActivities.SendToPrinting",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "input",
+        "direction": "In",
+        "type": "activityTrigger",
+        "properties": {}
+      }
+    ]
+  },
+  {
+    "name": "SendCallbackNotificationActivity",
+    "scriptFile": "DocumentProcessing.Functions.dll",
+    "entryPoint": "DocumentProcessing.Functions.Activities.DocumentProcessingActivities.SendCallbackNotification",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "input",
+        "direction": "In",
+        "type": "activityTrigger",
+        "properties": {}
+      }
+    ]
+  }
+]
