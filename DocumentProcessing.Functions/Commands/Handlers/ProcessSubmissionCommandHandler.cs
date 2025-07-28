@@ -31,8 +31,8 @@ public class ProcessSubmissionCommandHandler : IRequestHandler<ProcessSubmission
         {
             _logger.LogInformation("Processing submission for blob URL: {BlobUrl}", request.BlobUrl);
 
-            // Create submission aggregate
-            var submissionAggregate = _aggregateFactory.CreateSubmissionAggregate(request.BlobUrl, request.FileName);
+            // Create NEW submission aggregate using proper factory method
+            var submissionAggregate = _aggregateFactory.CreateNewSubmission(request.BlobUrl, request.FileName);
             
             // Save initial submission
             await _submissionRepository.AddAsync(submissionAggregate);

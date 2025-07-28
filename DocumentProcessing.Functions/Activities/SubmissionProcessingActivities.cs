@@ -14,6 +14,7 @@ public class SubmissionProcessingActivities
     private readonly IBlobService _blobService;
     private readonly IXmlProcessingService _xmlProcessingService;
     private readonly IAggregateFactory _aggregateFactory;
+    private readonly IAggregateRepository _aggregateRepository;
     private readonly ILogger<SubmissionProcessingActivities> _logger;
 
     public SubmissionProcessingActivities(
@@ -22,6 +23,7 @@ public class SubmissionProcessingActivities
         IBlobService blobService,
         IXmlProcessingService xmlProcessingService,
         IAggregateFactory aggregateFactory,
+        IAggregateRepository aggregateRepository,
         ILogger<SubmissionProcessingActivities> logger)
     {
         _submissionRepository = submissionRepository;
@@ -29,6 +31,7 @@ public class SubmissionProcessingActivities
         _blobService = blobService;
         _xmlProcessingService = xmlProcessingService;
         _aggregateFactory = aggregateFactory;
+        _aggregateRepository = aggregateRepository;
         _logger = logger;
     }
 
@@ -39,7 +42,8 @@ public class SubmissionProcessingActivities
         {
             _logger.LogInformation("Downloading XML from blob for submission: {SubmissionId}", submissionId);
 
-            var submissionAggregate = await _submissionRepository.GetByIdAsync(submissionId);
+            // Reconstruct aggregate from persistence
+            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(submissionId);
             if (submissionAggregate == null)
             {
                 return new BlobDownloadResult 
@@ -80,7 +84,8 @@ public class SubmissionProcessingActivities
         {
             _logger.LogInformation("Validating XML for submission: {SubmissionId}", input.SubmissionId);
 
-            var submissionAggregate = await _submissionRepository.GetByIdAsync(input.SubmissionId);
+            // Reconstruct aggregate from persistence
+            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(input.SubmissionId);
             if (submissionAggregate == null)
             {
                 return new XmlValidationActivityResult 
@@ -131,14 +136,16 @@ public class SubmissionProcessingActivities
         {
             _logger.LogInformation("Extracting communications for submission: {SubmissionId}", input.SubmissionId);
 
+            // Extract communications from XML (returns Communication entities)
             var communications = await _xmlProcessingService.ExtractCommunicationsFromXmlAsync(input.XmlContent, input.SubmissionId);
 
             var communicationIds = new List<Guid>();
 
-            // Save communications to database
+            // Create aggregates for each communication and save
             foreach (var communication in communications)
             {
-                var communicationAggregate = _aggregateFactory.CreateCommunicationAggregate(communication);
+                // Wrap the entity in an aggregate (this is reconstruction, not creation)
+                var communicationAggregate = new CommunicationAggregate(communication);
                 await _communicationRepository.AddAsync(communicationAggregate);
                 communicationIds.Add(communication.Id);
             }
@@ -146,7 +153,7 @@ public class SubmissionProcessingActivities
             await _communicationRepository.SaveChangesAsync();
 
             // Update submission status
-            var submissionAggregate = await _submissionRepository.GetByIdAsync(input.SubmissionId);
+            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(input.SubmissionId);
             if (submissionAggregate != null)
             {
                 submissionAggregate.ExtractCommunications(communications);
@@ -178,7 +185,8 @@ public class SubmissionProcessingActivities
         {
             _logger.LogInformation("Processing communication: {CommunicationId}", communicationId);
 
-            var communicationAggregate = await _communicationRepository.GetByIdAsync(communicationId);
+            // Reconstruct aggregate from persistence
+            var communicationAggregate = await _aggregateRepository.ReconstructCommunicationAggregateAsync(communicationId);
             if (communicationAggregate == null)
             {
                 return new CommunicationProcessingResult
@@ -228,7 +236,8 @@ public class SubmissionProcessingActivities
         {
             _logger.LogInformation("Finalizing submission: {SubmissionId}", input.SubmissionId);
 
-            var submissionAggregate = await _submissionRepository.GetByIdAsync(input.SubmissionId);
+            // Reconstruct aggregate from persistence
+            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(input.SubmissionId);
             if (submissionAggregate == null)
             {
                 return false;

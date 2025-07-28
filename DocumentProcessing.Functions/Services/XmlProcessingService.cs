@@ -81,18 +81,6 @@ public class XmlProcessingService : IXmlProcessingService
             var doc = XDocument.Parse(xmlContent);
             
             // Extract communications based on XML structure
-            // This assumes a structure like:
-            // <submission>
-            //   <communications>
-            //     <communication>
-            //       <recipient>email@example.com</recipient>
-            //       <subject>Subject line</subject>
-            //       <content>Document content</content>
-            //       <type>letter</type>
-            //     </communication>
-            //   </communications>
-            // </submission>
-
             var communicationElements = doc.Descendants("communication");
 
             foreach (var commElement in communicationElements)
@@ -195,8 +183,10 @@ public class XmlProcessingService : IXmlProcessingService
                 return null;
             }
 
+            // Create Communication entity directly - this is data extraction, not domain logic
             var communication = new Communication
             {
+                Id = Guid.NewGuid(),
                 SubmissionId = submissionId,
                 Recipient = recipient,
                 Subject = subject,

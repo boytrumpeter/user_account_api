@@ -4,7 +4,7 @@ using DocumentProcessing.Functions.Models.Domain.Aggregates;
 
 namespace DocumentProcessing.Functions.Infrastructure.Repositories;
 
-public class SubmissionRepository : ISubmissionRepository
+public class SubmissionRepository : ISubmissionRepository, IAggregateRepository
 {
     private readonly DocumentProcessingDbContext _context;
 
@@ -15,11 +15,24 @@ public class SubmissionRepository : ISubmissionRepository
 
     public async Task<SubmissionAggregate?> GetByIdAsync(Guid id)
     {
+        return await ReconstructSubmissionAggregateAsync(id);
+    }
+
+    public async Task<SubmissionAggregate?> ReconstructSubmissionAggregateAsync(Guid submissionId)
+    {
         var submission = await _context.Submissions
             .Include(s => s.Communications)
-            .FirstOrDefaultAsync(s => s.Id == id);
+            .FirstOrDefaultAsync(s => s.Id == submissionId);
 
         return submission != null ? new SubmissionAggregate(submission) : null;
+    }
+
+    public async Task<CommunicationAggregate?> ReconstructCommunicationAggregateAsync(Guid communicationId)
+    {
+        var communication = await _context.Communications
+            .FirstOrDefaultAsync(c => c.Id == communicationId);
+
+        return communication != null ? new CommunicationAggregate(communication) : null;
     }
 
     public async Task<SubmissionAggregate> AddAsync(SubmissionAggregate aggregate)
