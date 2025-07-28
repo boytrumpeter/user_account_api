@@ -1,19 +1,19 @@
-using MediatR;
+using DocumentProcessing.Functions.Infrastructure.QueryDispatcher;
 using DocumentProcessing.Functions.Models.Domain;
 
 namespace DocumentProcessing.Functions.Queries;
 
-public class GetSubmissionStatusQuery : IRequest<SubmissionStatusResponse?>
+public class GetSubmissionStatusQuery : IQuery<SubmissionStatusResponse?>
 {
     public Guid SubmissionId { get; set; }
 }
 
-public class GetSubmissionStatusHistoryQuery : IRequest<List<SubmissionStatusEntry>>
+public class GetSubmissionStatusHistoryQuery : IQuery<List<SubmissionStatusEntry>>
 {
     public Guid SubmissionId { get; set; }
 }
 
-public class GetCommunicationsQuery : IRequest<List<CommunicationResponse>>
+public class GetCommunicationsQuery : IQuery<List<CommunicationResponse>>
 {
     public Guid SubmissionId { get; set; }
 }

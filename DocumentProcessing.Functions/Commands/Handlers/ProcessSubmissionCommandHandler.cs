@@ -1,12 +1,12 @@
-using MediatR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask.Client;
 using DocumentProcessing.Functions.Models.Domain;
 using DocumentProcessing.Functions.Infrastructure.Repositories;
+using DocumentProcessing.Functions.Infrastructure.CommandDispatcher;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class ProcessSubmissionCommandHandler : IRequestHandler<ProcessSubmissionCommand, ProcessSubmissionResponse>
+public class ProcessSubmissionCommandHandler : ICommandHandler<ProcessSubmissionCommand, ProcessSubmissionResponse>
 {
     private readonly ISubmissionRepository _submissionRepository;
     private readonly IAggregateFactory _aggregateFactory;
@@ -25,14 +25,14 @@ public class ProcessSubmissionCommandHandler : IRequestHandler<ProcessSubmission
         _logger = logger;
     }
 
-    public async Task<ProcessSubmissionResponse> Handle(ProcessSubmissionCommand request, CancellationToken cancellationToken)
+    public async Task<ProcessSubmissionResponse> HandleAsync(ProcessSubmissionCommand command, CancellationToken cancellationToken = default)
     {
         try
         {
-            _logger.LogInformation("Processing submission for blob URL: {BlobUrl}", request.BlobUrl);
+            _logger.LogInformation("Processing submission for blob URL: {BlobUrl}", command.BlobUrl);
 
             // Create NEW submission aggregate using proper factory method
-            var submissionAggregate = _aggregateFactory.CreateNewSubmission(request.BlobUrl, request.FileName);
+            var submissionAggregate = _aggregateFactory.CreateNewSubmission(command.BlobUrl, command.FileName);
             
             // Save initial submission
             await _submissionRepository.AddAsync(submissionAggregate);

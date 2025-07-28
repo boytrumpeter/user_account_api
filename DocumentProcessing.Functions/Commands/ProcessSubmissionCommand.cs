@@ -1,8 +1,8 @@
-using MediatR;
+using DocumentProcessing.Functions.Infrastructure.CommandDispatcher;
 
 namespace DocumentProcessing.Functions.Commands;
 
-public class ProcessSubmissionCommand : IRequest<ProcessSubmissionResponse>
+public class ProcessSubmissionCommand : ICommand<ProcessSubmissionResponse>
 {
     public string BlobUrl { get; set; } = string.Empty;
     public string FileName { get; set; } = string.Empty;

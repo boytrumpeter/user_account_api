@@ -1,10 +1,10 @@
-using MediatR;
 using DocumentProcessing.Functions.Models.Domain;
 using DocumentProcessing.Functions.Infrastructure.Repositories;
+using DocumentProcessing.Functions.Infrastructure.QueryDispatcher;
 
 namespace DocumentProcessing.Functions.Queries.Handlers;
 
-public class GetSubmissionStatusQueryHandler : IRequestHandler<GetSubmissionStatusQuery, SubmissionStatusResponse?>
+public class GetSubmissionStatusQueryHandler : IQueryHandler<GetSubmissionStatusQuery, SubmissionStatusResponse?>
 {
     private readonly ISubmissionRepository _submissionRepository;
     private readonly ILogger<GetSubmissionStatusQueryHandler> _logger;
@@ -17,13 +17,13 @@ public class GetSubmissionStatusQueryHandler : IRequestHandler<GetSubmissionStat
         _logger = logger;
     }
 
-    public async Task<SubmissionStatusResponse?> Handle(GetSubmissionStatusQuery request, CancellationToken cancellationToken)
+    public async Task<SubmissionStatusResponse?> HandleAsync(GetSubmissionStatusQuery query, CancellationToken cancellationToken = default)
     {
         try
         {
-            _logger.LogInformation("Getting submission status for ID: {SubmissionId}", request.SubmissionId);
+            _logger.LogInformation("Getting submission status for ID: {SubmissionId}", query.SubmissionId);
 
-            var submissionAggregate = await _submissionRepository.GetByIdAsync(request.SubmissionId);
+            var submissionAggregate = await _submissionRepository.GetByIdAsync(query.SubmissionId);
             if (submissionAggregate == null)
             {
                 return null;
@@ -52,7 +52,7 @@ public class GetSubmissionStatusQueryHandler : IRequestHandler<GetSubmissionStat
     }
 }
 
-public class GetSubmissionStatusHistoryQueryHandler : IRequestHandler<GetSubmissionStatusHistoryQuery, List<SubmissionStatusEntry>>
+public class GetSubmissionStatusHistoryQueryHandler : IQueryHandler<GetSubmissionStatusHistoryQuery, List<SubmissionStatusEntry>>
 {
     private readonly ISubmissionRepository _submissionRepository;
     private readonly ILogger<GetSubmissionStatusHistoryQueryHandler> _logger;
@@ -65,13 +65,13 @@ public class GetSubmissionStatusHistoryQueryHandler : IRequestHandler<GetSubmiss
         _logger = logger;
     }
 
-    public async Task<List<SubmissionStatusEntry>> Handle(GetSubmissionStatusHistoryQuery request, CancellationToken cancellationToken)
+    public async Task<List<SubmissionStatusEntry>> HandleAsync(GetSubmissionStatusHistoryQuery query, CancellationToken cancellationToken = default)
     {
         try
         {
-            _logger.LogInformation("Getting submission status history for ID: {SubmissionId}", request.SubmissionId);
+            _logger.LogInformation("Getting submission status history for ID: {SubmissionId}", query.SubmissionId);
 
-            return await _submissionRepository.GetStatusHistoryAsync(request.SubmissionId);
+            return await _submissionRepository.GetStatusHistoryAsync(query.SubmissionId);
         }
         catch (Exception ex)
         {
@@ -81,7 +81,7 @@ public class GetSubmissionStatusHistoryQueryHandler : IRequestHandler<GetSubmiss
     }
 }
 
-public class GetCommunicationsQueryHandler : IRequestHandler<GetCommunicationsQuery, List<CommunicationResponse>>
+public class GetCommunicationsQueryHandler : IQueryHandler<GetCommunicationsQuery, List<CommunicationResponse>>
 {
     private readonly ICommunicationRepository _communicationRepository;
     private readonly ILogger<GetCommunicationsQueryHandler> _logger;
@@ -94,13 +94,13 @@ public class GetCommunicationsQueryHandler : IRequestHandler<GetCommunicationsQu
         _logger = logger;
     }
 
-    public async Task<List<CommunicationResponse>> Handle(GetCommunicationsQuery request, CancellationToken cancellationToken)
+    public async Task<List<CommunicationResponse>> HandleAsync(GetCommunicationsQuery query, CancellationToken cancellationToken = default)
     {
         try
         {
-            _logger.LogInformation("Getting communications for submission ID: {SubmissionId}", request.SubmissionId);
+            _logger.LogInformation("Getting communications for submission ID: {SubmissionId}", query.SubmissionId);
 
-            var communicationAggregates = await _communicationRepository.GetBySubmissionIdAsync(request.SubmissionId);
+            var communicationAggregates = await _communicationRepository.GetBySubmissionIdAsync(query.SubmissionId);
 
             return communicationAggregates.Select(ca => new CommunicationResponse
             {

@@ -2,11 +2,16 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using MediatR;
 using DocumentProcessing.Functions.Services;
 using DocumentProcessing.Functions.Infrastructure;
 using DocumentProcessing.Functions.Infrastructure.Repositories;
 using DocumentProcessing.Functions.Models.Domain;
+using DocumentProcessing.Functions.Infrastructure.CommandDispatcher;
+using DocumentProcessing.Functions.Infrastructure.QueryDispatcher;
+using DocumentProcessing.Functions.Commands;
+using DocumentProcessing.Functions.Commands.Handlers;
+using DocumentProcessing.Functions.Queries;
+using DocumentProcessing.Functions.Queries.Handlers;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
@@ -20,8 +25,17 @@ var host = new HostBuilder()
             options.UseSqlServer(connectionString);
         });
 
-        // Add MediatR for CQRS pattern
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+        // Command/Query Dispatchers
+        services.AddScoped<ICommandDispatcher, CommandDispatcher>();
+        services.AddScoped<IQueryDispatcher, QueryDispatcher>();
+        
+        // Command Handlers
+        services.AddScoped<ICommandHandler<ProcessSubmissionCommand, ProcessSubmissionResponse>, ProcessSubmissionCommandHandler>();
+        
+        // Query Handlers
+        services.AddScoped<IQueryHandler<GetSubmissionStatusQuery, SubmissionStatusResponse?>, GetSubmissionStatusQueryHandler>();
+        services.AddScoped<IQueryHandler<GetSubmissionStatusHistoryQuery, List<SubmissionStatusEntry>>, GetSubmissionStatusHistoryQueryHandler>();
+        services.AddScoped<IQueryHandler<GetCommunicationsQuery, List<CommunicationResponse>>, GetCommunicationsQueryHandler>();
         
         // Domain Services
         services.AddScoped<IAggregateFactory, AggregateFactory>();

@@ -3,20 +3,26 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
-using MediatR;
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Queries;
+using DocumentProcessing.Functions.Infrastructure.CommandDispatcher;
+using DocumentProcessing.Functions.Infrastructure.QueryDispatcher;
 
 namespace DocumentProcessing.Functions.Functions;
 
 public class SubmissionFunctions
 {
-    private readonly IMediator _mediator;
+    private readonly ICommandDispatcher _commandDispatcher;
+    private readonly IQueryDispatcher _queryDispatcher;
     private readonly ILogger<SubmissionFunctions> _logger;
 
-    public SubmissionFunctions(IMediator mediator, ILogger<SubmissionFunctions> logger)
+    public SubmissionFunctions(
+        ICommandDispatcher commandDispatcher,
+        IQueryDispatcher queryDispatcher,
+        ILogger<SubmissionFunctions> logger)
     {
-        _mediator = mediator;
+        _commandDispatcher = commandDispatcher;
+        _queryDispatcher = queryDispatcher;
         _logger = logger;
     }
 
@@ -45,7 +51,7 @@ public class SubmissionFunctions
                 FileName = request.FileName ?? Path.GetFileName(new Uri(request.BlobUrl).LocalPath)
             };
 
-            var result = await _mediator.Send(command);
+            var result = await _commandDispatcher.DispatchAsync<ProcessSubmissionCommand, ProcessSubmissionResponse>(command);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "application/json");
@@ -84,7 +90,7 @@ public class SubmissionFunctions
             }
 
             var query = new GetSubmissionStatusQuery { SubmissionId = submissionGuid };
-            var result = await _mediator.Send(query);
+            var result = await _queryDispatcher.DispatchAsync<GetSubmissionStatusQuery, SubmissionStatusResponse?>(query);
 
             if (result == null)
             {
@@ -130,7 +136,7 @@ public class SubmissionFunctions
             }
 
             var query = new GetSubmissionStatusHistoryQuery { SubmissionId = submissionGuid };
-            var result = await _mediator.Send(query);
+            var result = await _queryDispatcher.DispatchAsync<GetSubmissionStatusHistoryQuery, List<SubmissionStatusEntry>>(query);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "application/json");
@@ -169,7 +175,7 @@ public class SubmissionFunctions
             }
 
             var query = new GetCommunicationsQuery { SubmissionId = submissionGuid };
-            var result = await _mediator.Send(query);
+            var result = await _queryDispatcher.DispatchAsync<GetCommunicationsQuery, List<CommunicationResponse>>(query);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "application/json");
