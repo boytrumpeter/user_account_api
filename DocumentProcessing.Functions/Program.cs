@@ -26,10 +26,12 @@ var host = new HostBuilder()
         // Domain Services
         services.AddScoped<IAggregateFactory, AggregateFactory>();
         
-        // Infrastructure Services - Register SubmissionRepository for both interfaces
+        // Infrastructure Services - Each repository has its own responsibility
         services.AddScoped<ISubmissionRepository, SubmissionRepository>();
         services.AddScoped<ICommunicationRepository, CommunicationRepository>();
-        services.AddScoped<IAggregateRepository>(provider => provider.GetRequiredService<ISubmissionRepository>() as IAggregateRepository);
+        
+        // Aggregate reconstruction service - separate from individual repositories
+        services.AddScoped<IAggregateRepositoryService, AggregateRepositoryService>();
         
         // Application Services
         services.AddScoped<IBlobService, BlobService>();

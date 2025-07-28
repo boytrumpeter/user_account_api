@@ -9,13 +9,6 @@ public interface IAggregateFactory
     CommunicationAggregate CreateNewCommunication(Guid submissionId, string recipient, string subject, string content, string documentType);
 }
 
-public interface IAggregateRepository
-{
-    // Reconstruction methods - rebuild aggregates from persistence
-    Task<SubmissionAggregate?> ReconstructSubmissionAggregateAsync(Guid submissionId);
-    Task<CommunicationAggregate?> ReconstructCommunicationAggregateAsync(Guid communicationId);
-}
-
 public class AggregateFactory : IAggregateFactory
 {
     public SubmissionAggregate CreateNewSubmission(string blobUrl, string fileName)

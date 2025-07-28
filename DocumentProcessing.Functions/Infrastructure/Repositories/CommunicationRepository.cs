@@ -4,6 +4,10 @@ using DocumentProcessing.Functions.Models.Domain.Aggregates;
 
 namespace DocumentProcessing.Functions.Infrastructure.Repositories;
 
+/// <summary>
+/// Repository responsible only for Communication aggregate persistence operations.
+/// Follows Single Responsibility Principle.
+/// </summary>
 public class CommunicationRepository : ICommunicationRepository
 {
     private readonly DocumentProcessingDbContext _context;

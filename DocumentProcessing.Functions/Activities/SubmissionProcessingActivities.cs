@@ -14,7 +14,7 @@ public class SubmissionProcessingActivities
     private readonly IBlobService _blobService;
     private readonly IXmlProcessingService _xmlProcessingService;
     private readonly IAggregateFactory _aggregateFactory;
-    private readonly IAggregateRepository _aggregateRepository;
+    private readonly IAggregateRepositoryService _aggregateRepositoryService;
     private readonly ILogger<SubmissionProcessingActivities> _logger;
 
     public SubmissionProcessingActivities(
@@ -23,7 +23,7 @@ public class SubmissionProcessingActivities
         IBlobService blobService,
         IXmlProcessingService xmlProcessingService,
         IAggregateFactory aggregateFactory,
-        IAggregateRepository aggregateRepository,
+        IAggregateRepositoryService aggregateRepositoryService,
         ILogger<SubmissionProcessingActivities> logger)
     {
         _submissionRepository = submissionRepository;
@@ -31,7 +31,7 @@ public class SubmissionProcessingActivities
         _blobService = blobService;
         _xmlProcessingService = xmlProcessingService;
         _aggregateFactory = aggregateFactory;
-        _aggregateRepository = aggregateRepository;
+        _aggregateRepositoryService = aggregateRepositoryService;
         _logger = logger;
     }
 
@@ -43,7 +43,7 @@ public class SubmissionProcessingActivities
             _logger.LogInformation("Downloading XML from blob for submission: {SubmissionId}", submissionId);
 
             // Reconstruct aggregate from persistence
-            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(submissionId);
+            var submissionAggregate = await _aggregateRepositoryService.ReconstructSubmissionAggregateAsync(submissionId);
             if (submissionAggregate == null)
             {
                 return new BlobDownloadResult 
@@ -85,7 +85,7 @@ public class SubmissionProcessingActivities
             _logger.LogInformation("Validating XML for submission: {SubmissionId}", input.SubmissionId);
 
             // Reconstruct aggregate from persistence
-            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(input.SubmissionId);
+            var submissionAggregate = await _aggregateRepositoryService.ReconstructSubmissionAggregateAsync(input.SubmissionId);
             if (submissionAggregate == null)
             {
                 return new XmlValidationActivityResult 
@@ -153,7 +153,7 @@ public class SubmissionProcessingActivities
             await _communicationRepository.SaveChangesAsync();
 
             // Update submission status
-            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(input.SubmissionId);
+            var submissionAggregate = await _aggregateRepositoryService.ReconstructSubmissionAggregateAsync(input.SubmissionId);
             if (submissionAggregate != null)
             {
                 submissionAggregate.ExtractCommunications(communications);
@@ -186,7 +186,7 @@ public class SubmissionProcessingActivities
             _logger.LogInformation("Processing communication: {CommunicationId}", communicationId);
 
             // Reconstruct aggregate from persistence
-            var communicationAggregate = await _aggregateRepository.ReconstructCommunicationAggregateAsync(communicationId);
+            var communicationAggregate = await _aggregateRepositoryService.ReconstructCommunicationAggregateAsync(communicationId);
             if (communicationAggregate == null)
             {
                 return new CommunicationProcessingResult
@@ -237,7 +237,7 @@ public class SubmissionProcessingActivities
             _logger.LogInformation("Finalizing submission: {SubmissionId}", input.SubmissionId);
 
             // Reconstruct aggregate from persistence
-            var submissionAggregate = await _aggregateRepository.ReconstructSubmissionAggregateAsync(input.SubmissionId);
+            var submissionAggregate = await _aggregateRepositoryService.ReconstructSubmissionAggregateAsync(input.SubmissionId);
             if (submissionAggregate == null)
             {
                 return false;
