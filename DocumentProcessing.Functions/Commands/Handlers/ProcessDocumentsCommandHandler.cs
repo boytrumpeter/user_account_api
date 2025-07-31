@@ -1,11 +1,11 @@
-using MediatR;
 using Microsoft.DurableTask.Client;
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Models;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class ProcessDocumentsCommandHandler : IRequestHandler<ProcessDocumentsCommand, ProcessDocumentsResponse>
+public class ProcessDocumentsCommandHandler : ICommandHandler<ProcessDocumentsCommand, ProcessDocumentsResponse>
 {
     private readonly DurableTaskClient _durableTaskClient;
 
@@ -14,7 +14,7 @@ public class ProcessDocumentsCommandHandler : IRequestHandler<ProcessDocumentsCo
         _durableTaskClient = durableTaskClient;
     }
 
-    public async Task<ProcessDocumentsResponse> Handle(ProcessDocumentsCommand request, CancellationToken cancellationToken)
+    public async Task<ProcessDocumentsResponse> HandleAsync(ProcessDocumentsCommand request, CancellationToken cancellationToken = default)
     {
         var orchestrationInput = new ProcessDocumentsRequest
         {

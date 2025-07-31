@@ -1,10 +1,10 @@
-using MediatR;
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Services;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class ValidateDocumentCommandHandler : IRequestHandler<ValidateDocumentCommand, ValidationResult>
+public class ValidateDocumentCommandHandler : ICommandHandler<ValidateDocumentCommand, ValidationResult>
 {
     private readonly IXmlValidationService _xmlValidationService;
 
@@ -13,7 +13,7 @@ public class ValidateDocumentCommandHandler : IRequestHandler<ValidateDocumentCo
         _xmlValidationService = xmlValidationService;
     }
 
-    public async Task<ValidationResult> Handle(ValidateDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<ValidationResult> HandleAsync(ValidateDocumentCommand request, CancellationToken cancellationToken = default)
     {
         var validationResult = await _xmlValidationService.ValidateXmlAsync(request.XmlContent);
 

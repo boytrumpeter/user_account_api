@@ -1,14 +1,14 @@
-using MediatR;
 using DocumentProcessing.Functions.Models;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Queries;
 
-public class GetProcessingStatusQuery : IRequest<ProcessingStatusResponse>
+public class GetProcessingStatusQuery : IQuery<ProcessingStatusResponse>
 {
     public string BatchId { get; set; } = string.Empty;
 }
 
-public class GetDocumentStatusQuery : IRequest<DocumentProcessingResult?>
+public class GetDocumentStatusQuery : IQuery<DocumentProcessingResult?>
 {
     public string DocumentId { get; set; } = string.Empty;
 }

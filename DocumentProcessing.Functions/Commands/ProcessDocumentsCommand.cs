@@ -1,9 +1,9 @@
-using MediatR;
 using DocumentProcessing.Functions.Models;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Commands;
 
-public class ProcessDocumentsCommand : IRequest<ProcessDocumentsResponse>
+public class ProcessDocumentsCommand : ICommand<ProcessDocumentsResponse>
 {
     public string BatchId { get; set; } = string.Empty;
     public List<Document> Documents { get; set; } = new();
@@ -11,13 +11,13 @@ public class ProcessDocumentsCommand : IRequest<ProcessDocumentsResponse>
     public Dictionary<string, object> Metadata { get; set; } = new();
 }
 
-public class ValidateDocumentCommand : IRequest<ValidationResult>
+public class ValidateDocumentCommand : ICommand<ValidationResult>
 {
     public string DocumentId { get; set; } = string.Empty;
     public string XmlContent { get; set; } = string.Empty;
 }
 
-public class SendToPrintingCommand : IRequest<PrintingResult>
+public class SendToPrintingCommand : ICommand<PrintingResult>
 {
     public string DocumentId { get; set; } = string.Empty;
     public string DocumentName { get; set; } = string.Empty;

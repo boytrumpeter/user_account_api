@@ -1,23 +1,26 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask;
 using Microsoft.Extensions.Logging;
-using MediatR;
 using System.Text;
 using System.Text.Json;
 using DocumentProcessing.Functions.Commands;
+using DocumentProcessing.Functions.Infrastructure;
 using DocumentProcessing.Functions.Orchestrators;
 
 namespace DocumentProcessing.Functions.Activities;
 
 public class DocumentProcessingActivities
 {
-    private readonly IMediator _mediator;
+    private readonly ICommandDispatcher _commandDispatcher;
     private readonly HttpClient _httpClient;
     private readonly ILogger<DocumentProcessingActivities> _logger;
 
-    public DocumentProcessingActivities(IMediator mediator, HttpClient httpClient, ILogger<DocumentProcessingActivities> logger)
+    public DocumentProcessingActivities(
+        ICommandDispatcher commandDispatcher,
+        HttpClient httpClient, 
+        ILogger<DocumentProcessingActivities> logger)
     {
-        _mediator = mediator;
+        _commandDispatcher = commandDispatcher;
         _httpClient = httpClient;
         _logger = logger;
     }
@@ -33,7 +36,7 @@ public class DocumentProcessingActivities
             XmlContent = input.XmlContent
         };
 
-        var result = await _mediator.Send(command);
+        var result = await _commandDispatcher.DispatchAsync(command);
         
         _logger.LogInformation("Document {DocumentId} validation completed. IsValid: {IsValid}", 
             input.DocumentId, result.IsValid);
@@ -53,7 +56,7 @@ public class DocumentProcessingActivities
             XmlContent = input.XmlContent
         };
 
-        var result = await _mediator.Send(command);
+        var result = await _commandDispatcher.DispatchAsync(command);
         
         _logger.LogInformation("Document {DocumentId} printing submission completed. IsSuccessful: {IsSuccessful}, JobId: {JobId}", 
             input.DocumentId, result.IsSuccessful, result.JobId);

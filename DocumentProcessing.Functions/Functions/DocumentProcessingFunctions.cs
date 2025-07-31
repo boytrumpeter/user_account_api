@@ -3,21 +3,26 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
-using MediatR;
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Queries;
 using DocumentProcessing.Functions.Models;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Functions;
 
 public class DocumentProcessingFunctions
 {
-    private readonly IMediator _mediator;
+    private readonly ICommandDispatcher _commandDispatcher;
+    private readonly IQueryDispatcher _queryDispatcher;
     private readonly ILogger<DocumentProcessingFunctions> _logger;
 
-    public DocumentProcessingFunctions(IMediator mediator, ILogger<DocumentProcessingFunctions> logger)
+    public DocumentProcessingFunctions(
+        ICommandDispatcher commandDispatcher,
+        IQueryDispatcher queryDispatcher,
+        ILogger<DocumentProcessingFunctions> logger)
     {
-        _mediator = mediator;
+        _commandDispatcher = commandDispatcher;
+        _queryDispatcher = queryDispatcher;
         _logger = logger;
     }
 
@@ -50,7 +55,7 @@ public class DocumentProcessingFunctions
                 Metadata = request.Metadata
             };
 
-            var result = await _mediator.Send(command);
+            var result = await _commandDispatcher.DispatchAsync(command);
 
             var response = req.CreateResponse(HttpStatusCode.Accepted);
             response.Headers.Add("Content-Type", "application/json");
@@ -83,7 +88,7 @@ public class DocumentProcessingFunctions
         try
         {
             var query = new GetProcessingStatusQuery { BatchId = batchId };
-            var result = await _mediator.Send(query);
+            var result = await _queryDispatcher.DispatchAsync(query);
 
             if (result == null)
             {
@@ -123,7 +128,7 @@ public class DocumentProcessingFunctions
         try
         {
             var query = new GetDocumentStatusQuery { DocumentId = documentId };
-            var result = await _mediator.Send(query);
+            var result = await _queryDispatcher.DispatchAsync(query);
 
             if (result == null)
             {
@@ -180,7 +185,7 @@ public class DocumentProcessingFunctions
                 XmlContent = request.XmlContent
             };
 
-            var result = await _mediator.Send(command);
+            var result = await _commandDispatcher.DispatchAsync(command);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "application/json");
