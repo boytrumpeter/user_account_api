@@ -3,21 +3,33 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text.Json;
-using MediatR;
 using DocumentProcessing.Functions.Commands;
+using DocumentProcessing.Functions.Commands.Handlers;
 using DocumentProcessing.Functions.Queries;
+using DocumentProcessing.Functions.Queries.Handlers;
 using DocumentProcessing.Functions.Models;
 
 namespace DocumentProcessing.Functions.Functions;
 
 public class DocumentProcessingFunctions
 {
-    private readonly IMediator _mediator;
+    private readonly ProcessDocumentsCommandHandler _processDocumentsHandler;
+    private readonly ValidateDocumentCommandHandler _validateDocumentHandler;
+    private readonly GetProcessingStatusQueryHandler _getProcessingStatusHandler;
+    private readonly GetDocumentStatusQueryHandler _getDocumentStatusHandler;
     private readonly ILogger<DocumentProcessingFunctions> _logger;
 
-    public DocumentProcessingFunctions(IMediator mediator, ILogger<DocumentProcessingFunctions> logger)
+    public DocumentProcessingFunctions(
+        ProcessDocumentsCommandHandler processDocumentsHandler,
+        ValidateDocumentCommandHandler validateDocumentHandler,
+        GetProcessingStatusQueryHandler getProcessingStatusHandler,
+        GetDocumentStatusQueryHandler getDocumentStatusHandler,
+        ILogger<DocumentProcessingFunctions> logger)
     {
-        _mediator = mediator;
+        _processDocumentsHandler = processDocumentsHandler;
+        _validateDocumentHandler = validateDocumentHandler;
+        _getProcessingStatusHandler = getProcessingStatusHandler;
+        _getDocumentStatusHandler = getDocumentStatusHandler;
         _logger = logger;
     }
 
@@ -50,7 +62,7 @@ public class DocumentProcessingFunctions
                 Metadata = request.Metadata
             };
 
-            var result = await _mediator.Send(command);
+            var result = await _processDocumentsHandler.ExecuteAsync(command);
 
             var response = req.CreateResponse(HttpStatusCode.Accepted);
             response.Headers.Add("Content-Type", "application/json");
@@ -83,7 +95,7 @@ public class DocumentProcessingFunctions
         try
         {
             var query = new GetProcessingStatusQuery { BatchId = batchId };
-            var result = await _mediator.Send(query);
+            var result = await _getProcessingStatusHandler.ExecuteAsync(query);
 
             if (result == null)
             {
@@ -123,7 +135,7 @@ public class DocumentProcessingFunctions
         try
         {
             var query = new GetDocumentStatusQuery { DocumentId = documentId };
-            var result = await _mediator.Send(query);
+            var result = await _getDocumentStatusHandler.ExecuteAsync(query);
 
             if (result == null)
             {
@@ -180,7 +192,7 @@ public class DocumentProcessingFunctions
                 XmlContent = request.XmlContent
             };
 
-            var result = await _mediator.Send(command);
+            var result = await _validateDocumentHandler.ExecuteAsync(command);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "application/json");

@@ -1,10 +1,9 @@
-using MediatR;
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Services;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class SendToPrintingCommandHandler : IRequestHandler<SendToPrintingCommand, PrintingResult>
+public class SendToPrintingCommandHandler
 {
     private readonly IPrintingApiService _printingApiService;
 
@@ -13,7 +12,7 @@ public class SendToPrintingCommandHandler : IRequestHandler<SendToPrintingComman
         _printingApiService = printingApiService;
     }
 
-    public async Task<PrintingResult> Handle(SendToPrintingCommand request, CancellationToken cancellationToken)
+    public async Task<PrintingResult> ExecuteAsync(SendToPrintingCommand request)
     {
         try
         {

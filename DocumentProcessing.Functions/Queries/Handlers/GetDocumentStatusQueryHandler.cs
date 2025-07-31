@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.DurableTask.Client;
 using Microsoft.Extensions.Logging;
 using DocumentProcessing.Functions.Queries;
@@ -6,7 +5,7 @@ using DocumentProcessing.Functions.Models;
 
 namespace DocumentProcessing.Functions.Queries.Handlers;
 
-public class GetDocumentStatusQueryHandler : IRequestHandler<GetDocumentStatusQuery, DocumentProcessingResult?>
+public class GetDocumentStatusQueryHandler
 {
     private readonly DurableTaskClient _durableTaskClient;
     private readonly ILogger<GetDocumentStatusQueryHandler> _logger;
@@ -17,7 +16,7 @@ public class GetDocumentStatusQueryHandler : IRequestHandler<GetDocumentStatusQu
         _logger = logger;
     }
 
-    public async Task<DocumentProcessingResult?> Handle(GetDocumentStatusQuery request, CancellationToken cancellationToken)
+    public async Task<DocumentProcessingResult?> ExecuteAsync(GetDocumentStatusQuery request)
     {
         try
         {
