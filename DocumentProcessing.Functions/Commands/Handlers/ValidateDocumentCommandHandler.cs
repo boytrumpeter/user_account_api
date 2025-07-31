@@ -1,9 +1,10 @@
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Services;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class ValidateDocumentCommandHandler
+public class ValidateDocumentCommandHandler : ICommandHandler<ValidateDocumentCommand, ValidationResult>
 {
     private readonly IXmlValidationService _xmlValidationService;
 
@@ -12,7 +13,7 @@ public class ValidateDocumentCommandHandler
         _xmlValidationService = xmlValidationService;
     }
 
-    public async Task<ValidationResult> ExecuteAsync(ValidateDocumentCommand request)
+    public async Task<ValidationResult> HandleAsync(ValidateDocumentCommand request, CancellationToken cancellationToken = default)
     {
         var validationResult = await _xmlValidationService.ValidateXmlAsync(request.XmlContent);
 

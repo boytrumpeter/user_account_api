@@ -1,10 +1,11 @@
 using Microsoft.DurableTask.Client;
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Models;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class ProcessDocumentsCommandHandler
+public class ProcessDocumentsCommandHandler : ICommandHandler<ProcessDocumentsCommand, ProcessDocumentsResponse>
 {
     private readonly DurableTaskClient _durableTaskClient;
 
@@ -13,7 +14,7 @@ public class ProcessDocumentsCommandHandler
         _durableTaskClient = durableTaskClient;
     }
 
-    public async Task<ProcessDocumentsResponse> ExecuteAsync(ProcessDocumentsCommand request)
+    public async Task<ProcessDocumentsResponse> HandleAsync(ProcessDocumentsCommand request, CancellationToken cancellationToken = default)
     {
         var orchestrationInput = new ProcessDocumentsRequest
         {

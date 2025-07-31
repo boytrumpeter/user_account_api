@@ -2,10 +2,11 @@ using Microsoft.DurableTask.Client;
 using Microsoft.Extensions.Logging;
 using DocumentProcessing.Functions.Queries;
 using DocumentProcessing.Functions.Models;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Queries.Handlers;
 
-public class GetDocumentStatusQueryHandler
+public class GetDocumentStatusQueryHandler : IQueryHandler<GetDocumentStatusQuery, DocumentProcessingResult?>
 {
     private readonly DurableTaskClient _durableTaskClient;
     private readonly ILogger<GetDocumentStatusQueryHandler> _logger;
@@ -16,7 +17,7 @@ public class GetDocumentStatusQueryHandler
         _logger = logger;
     }
 
-    public async Task<DocumentProcessingResult?> ExecuteAsync(GetDocumentStatusQuery request)
+    public async Task<DocumentProcessingResult?> HandleAsync(GetDocumentStatusQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

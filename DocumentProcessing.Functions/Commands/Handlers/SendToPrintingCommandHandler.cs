@@ -1,9 +1,10 @@
 using DocumentProcessing.Functions.Commands;
 using DocumentProcessing.Functions.Services;
+using DocumentProcessing.Functions.Infrastructure;
 
 namespace DocumentProcessing.Functions.Commands.Handlers;
 
-public class SendToPrintingCommandHandler
+public class SendToPrintingCommandHandler : ICommandHandler<SendToPrintingCommand, PrintingResult>
 {
     private readonly IPrintingApiService _printingApiService;
 
@@ -12,7 +13,7 @@ public class SendToPrintingCommandHandler
         _printingApiService = printingApiService;
     }
 
-    public async Task<PrintingResult> ExecuteAsync(SendToPrintingCommand request)
+    public async Task<PrintingResult> HandleAsync(SendToPrintingCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
