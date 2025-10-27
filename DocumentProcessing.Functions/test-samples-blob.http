@@ -1,0 +1,63 @@
+### Process Submission from Blob Storage
+POST http://localhost:7071/api/submissions/process
+Content-Type: application/json
+
+{
+  "blobUrl": "https://example-storage.blob.core.windows.net/documents/sample-submission.xml",
+  "fileName": "sample-submission.xml"
+}
+
+### Process Submission from Third-Party Blob (AWS S3 example)
+POST http://localhost:7071/api/submissions/process
+Content-Type: application/json
+
+{
+  "blobUrl": "https://my-bucket.s3.amazonaws.com/documents/submission-2024-01.xml",
+  "fileName": "submission-2024-01.xml"
+}
+
+### Get Submission Status
+GET http://localhost:7071/api/submissions/{{submissionId}}/status
+
+### Get Submission Status History
+GET http://localhost:7071/api/submissions/{{submissionId}}/status/history
+
+### Get Communications for Submission
+GET http://localhost:7071/api/submissions/{{submissionId}}/communications
+
+### Example responses:
+
+# Process Submission Response:
+# {
+#   "submissionId": "12345678-1234-1234-1234-123456789012",
+#   "status": "Processing",
+#   "isSuccess": true,
+#   "startedAt": "2024-01-15T10:30:00Z"
+# }
+
+# Submission Status Response:
+# {
+#   "id": "12345678-1234-1234-1234-123456789012",
+#   "blobUrl": "https://example-storage.blob.core.windows.net/documents/sample-submission.xml",
+#   "fileName": "sample-submission.xml",
+#   "status": "Completed",
+#   "createdAt": "2024-01-15T10:30:00Z",
+#   "processedAt": "2024-01-15T10:35:00Z",
+#   "validationErrors": [],
+#   "communicationCount": 3
+# }
+
+# Communications Response:
+# [
+#   {
+#     "id": "87654321-4321-4321-4321-210987654321",
+#     "submissionId": "12345678-1234-1234-1234-123456789012",
+#     "documentType": "letter",
+#     "recipient": "john.doe@example.com",
+#     "subject": "Important Document",
+#     "status": "Stored",
+#     "createdAt": "2024-01-15T10:32:00Z",
+#     "processedAt": "2024-01-15T10:34:00Z",
+#     "validationErrors": []
+#   }
+# ]

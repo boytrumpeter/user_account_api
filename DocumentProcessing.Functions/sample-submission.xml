@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<submission id="sub-2024-001" xmlns="http://example.com/submission">
+  <metadata>
+    <created>2024-01-15T10:00:00Z</created>
+    <source>third-party-system</source>
+    <version>1.0</version>
+  </metadata>
+  
+  <communications>
+    <communication id="comm-001">
+      <recipient>john.doe@example.com</recipient>
+      <subject>Important Policy Update</subject>
+      <type>email</type>
+      <content>
+        <![CDATA[
+        Dear John Doe,
+
+        We are writing to inform you of important updates to your policy.
+        Please review the attached documents carefully.
+
+        If you have any questions, please contact our customer service team.
+
+        Best regards,
+        Customer Service Team
+        ]]>
+      </content>
+    </communication>
+    
+    <communication id="comm-002">
+      <recipient>jane.smith@example.com</recipient>
+      <subject>Account Statement</subject>
+      <type>letter</type>
+      <content>
+        <![CDATA[
+        Dear Jane Smith,
+
+        Your monthly account statement is now available.
+        
+        Account Balance: $1,234.56
+        Last Payment: $100.00 on 2024-01-10
+        
+        Thank you for your business.
+
+        Sincerely,
+        Account Management
+        ]]>
+      </content>
+    </communication>
+    
+    <communication id="comm-003">
+      <recipient>bob.wilson@example.com</recipient>
+      <subject>Service Renewal Notice</subject>
+      <type>notification</type>
+      <content>
+        <![CDATA[
+        Dear Bob Wilson,
+
+        Your service is scheduled for renewal on 2024-02-15.
+        
+        Current Plan: Premium Service
+        Renewal Amount: $299.99
+        
+        No action is required if you wish to continue with automatic renewal.
+
+        Best regards,
+        Service Team
+        ]]>
+      </content>
+    </communication>
+  </communications>
+</submission>
